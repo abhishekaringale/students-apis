@@ -12,12 +12,22 @@ import (
 	"time"
 
 	"github.com/abhishekaringale/students-api/internal/config"
+	"github.com/abhishekaringale/students-api/internal/http/handlers/student"
+	"github.com/abhishekaringale/students-api/storage/sqlite"
 )
 
 func main() {
 	fmt.Println("welcome to go")
 	cfg := config.MustLoad()
+
+	storage, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
 	router := http.NewServeMux()
+
+	router.HandleFunc("POST /api/students", student.New(storage))
+
 	router.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("ok"))
 	})
