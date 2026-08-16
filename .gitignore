@@ -31,5 +31,9 @@ go.work.sum
 # .idea/
 # .vscode/
 
-storage
-/config
+storage/*.db
+storage/*.db-journal
+storage/*.db-shm
+storage/*.db-wal
+
+config/local.yaml
